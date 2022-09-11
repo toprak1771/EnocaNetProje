@@ -109,7 +109,8 @@ namespace DataAccessLayer.Concrete
                                 Genre = "Action",
                                 Image = "https://cdn.dsmcdn.com/ty12/product/media/images/20200917/17/11016532/87146765/1/1_org_zoom.jpg",
                                 CinemaHalls = new List<CinemaHall>(),
-                                Year = 2011
+                                Year = 2011,
+                                
                             }
                         );
                 };

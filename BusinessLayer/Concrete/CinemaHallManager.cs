@@ -35,7 +35,7 @@ namespace BusinessLayer.Concrete
 
         public List<CinemaHall> TGetList()
         {
-            throw new NotImplementedException();
+           return _cinemaHalldal.GetList();
         }
 
         public void TUpdate(CinemaHall t)

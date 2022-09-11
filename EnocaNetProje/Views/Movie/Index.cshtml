@@ -1,0 +1,64 @@
+﻿@model List<Movie>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<h1>Movie List</h1>
+<hr />
+
+<a asp-action="Create" asp-controller="Movie" class="btn btn-info mr-1 mb-2">Create Movie</a>
+<div class="row">
+    <div class="col-3">
+        <form asp-action="GetMoviesByDirector" asp-controller="Movie" method="post">
+            <input type="text" name="DirectorName" placeholder="Director Name" />
+            <button>Search Director</button>
+        </form>
+    </div>
+    <div class="col-3">
+        <form asp-action="GetMoviesByGenre" asp-controller="Movie" method="post">
+            <input type="text" name="Genre" placeholder="Genre" />
+            <button>Search Genre</button>
+        </form>
+    </div>
+    <div class="col-3">
+        <form asp-action="GetMoviesByName" asp-controller="Movie" method="post">
+            <input type="text" name="MovieName" placeholder="Movie Name" />
+            <button>Search Movie</button>
+        </form>
+    </div>
+    <div class="col-3">
+        <form asp-action="GetMoviesByYear" asp-controller="Movie" method="post">
+            <input type="number" name="Year1" placeholder="Movie Year" />
+            <input type="number" name="Year2" placeholder="Movie Year" />
+            <button>Search Movie Year</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col-4 p-3">
+            <div class="card h-100">
+                <img src="@item.Image" class="card-img-top" alt="image">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">@item.Director</p>
+                    <p class="card-text">@item.Genre</p>
+                    <p class="card-text">@item.Year</p>
+                    @foreach (var halls in item.CinemaHalls)
+                    {
+                        <p class="card-text">@halls.Name</p>
+                    }
+                    <a asp-action="Delete" asp-controller="Movie" asp-route-id="@item.MovieId" class="btn btn-info mr-1">Delete Movie</a>
+                    <a asp-action="Update" asp-controller="Movie" asp-route-id="@item.MovieId" class="btn btn-info mr-1">Update Movie</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

@@ -20,27 +20,49 @@ namespace BusinessLayer.Concrete
 
         public void TAdd(Movie t)
         {
-            throw new NotImplementedException();
+            _movieDal.Insert(t);
         }
 
         public void TDelete(Movie t)
         {
-            throw new NotImplementedException();
+            _movieDal.Delete(t);
         }
+
+        public List<Movie> TGetByDirectorName(string name)
+        {
+            return _movieDal.GetListByFilter(x => x.Director.Contains(name));
+        }
+
+        public List<Movie> TGetByGenre(string genre)
+        {
+            return _movieDal.GetListByFilter(x => x.Genre == genre);
+        }
+
+       
 
         public Movie TGetById(int id)
         {
-            throw new NotImplementedException();
+            return _movieDal.GetById(id);
+        }
+
+        public List<Movie> TGetByMovieName(string movieName)
+        {
+            return _movieDal.GetListByFilter(x => x.Name.Contains(movieName));
+        }
+
+        public List<Movie> TGetByMovieYear(int y1, int y2)
+        {
+            return _movieDal.GetListByFilter(x => x.Year>=y1 && x.Year<=y2);
         }
 
         public List<Movie> TGetList()
         {
-            throw new NotImplementedException();
+            return _movieDal.GetList();
         }
 
         public void TUpdate(Movie t)
         {
-            throw new NotImplementedException();
+            _movieDal.Update(t);
         }
     }
 }
