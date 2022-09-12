@@ -50,6 +50,13 @@ namespace EnocaNetProje.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult MovieDetails(int id)
+        {
+            var movie = context.Movies.Include(x => x.CinemaHalls).Where(a => a.MovieId == id).FirstOrDefault();
+            return View(movie);
+        }
+
         [HttpPost]
         public IActionResult GetMoviesByGenre(IFormCollection data)
         {
@@ -120,8 +127,7 @@ namespace EnocaNetProje.Controllers
         public IActionResult Create(CreateMovieModel createMovieModel)
         {
             
-            //CreateMovieValidator movieValidator = new CreateMovieValidator();
-            //movieValidator.ValidateAndThrow(createMovieModel);
+            
             Movie movie = new Movie() 
             {
                 Name=createMovieModel.Name,
@@ -140,11 +146,19 @@ namespace EnocaNetProje.Controllers
         public IActionResult Update(int id)
         {
             ViewBag.cinemaHalls2 = cinemaHallManager.TGetList();
-            Movie movie = movieManager.TGetById(id);
-            if (movie!=null)
-            {
-                return View(movie);
-                //return View(movie.Adapt<CreateMovieModel>());
+            var UpdateMovie = context.Movies.Include(x=>x.CinemaHalls).SingleOrDefault(x => x.MovieId == id);
+            CreateMovieModel createMovieModel = new CreateMovieModel();
+            if (UpdateMovie != null)
+            {               
+                createMovieModel.MovieId = UpdateMovie.MovieId;
+                createMovieModel.Name = UpdateMovie.Name;
+                createMovieModel.Image = UpdateMovie.Image;
+                createMovieModel.Year = UpdateMovie.Year;
+                createMovieModel.Genre = UpdateMovie.Genre;
+                createMovieModel.Director = UpdateMovie.Director;
+                createMovieModel.CinemaHalls = UpdateMovie.CinemaHalls;
+                return View(createMovieModel);
+                
             }
             else
             {
@@ -154,24 +168,25 @@ namespace EnocaNetProje.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(Movie updateMovie)
+        public IActionResult Update(CreateMovieModel movieModel)
         {
-            Movie movie = movieManager.TGetById(updateMovie.MovieId);
-            if (movie!=null)
+            var UpdateMovie = context.Movies.Include(x => x.CinemaHalls).SingleOrDefault(x => x.MovieId == movieModel.MovieId);
+            if (UpdateMovie != null)
             {
-                //movie = (createMovieModel.Adapt<Movie>());
-                movie.Name = updateMovie.Name;
-                movie.Genre = updateMovie.Genre;
-                movie.Director = updateMovie.Genre;
-                movie.Year = updateMovie.Year;
-                //movie.CinemaHalls = createMovieModel.CinemaHalls;
-                movieManager.TUpdate(movie);
+                UpdateMovie.MovieId = movieModel.MovieId;
+                UpdateMovie.Name = movieModel.Name;
+                UpdateMovie.Image = movieModel.Image;
+                UpdateMovie.Year = movieModel.Year;
+                UpdateMovie.Genre = movieModel.Genre;
+                UpdateMovie.Director = movieModel.Director;
+                
+                movieManager.TUpdate(UpdateMovie);
                 return RedirectToAction("Index");
 
             }
             else 
             {
-                return View(updateMovie);
+                return View(movieModel);
             }
         }
 

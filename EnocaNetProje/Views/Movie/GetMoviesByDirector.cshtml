@@ -21,9 +21,18 @@
                     <h5 class="card-title">@item.Name</h5>
                     <p class="card-text">@item.Director</p>
                     <p class="card-text">@item.Genre</p>
-                    <p class="card-text">@item.Year</p>                   
-                    <a asp-action="Delete" asp-controller="Movie" asp-route-id="@item.MovieId" class="btn btn-info mr-1">Delete Movie</a>
-                    <a asp-action="Update" asp-controller="Movie" asp-route-id="@item.MovieId" class="btn btn-info mr-1">Update Movie</a>
+                    <p class="card-text">@item.Year</p>
+                    <div class="d-flex row">
+                        <div class="col-4 p-3">
+                            <a asp-action="MovieDetails" asp-controller="Movie" asp-route-id="@item.MovieId" class="btn btn-info mr-1 mt-2">Details Movie</a>
+                        </div>
+                        <div class="col-4 p-3">
+                            <a asp-action="Delete" asp-controller="Movie" asp-route-id="@item.MovieId" class="btn btn-info mr-1 mt-2">Delete Movie</a>
+                        </div>
+                        <div class="col-4 p-3">
+                            <a asp-action="Update" asp-controller="Movie" asp-route-id="@item.MovieId" class="btn btn-info mr-1 mt-2">Update Movie</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
